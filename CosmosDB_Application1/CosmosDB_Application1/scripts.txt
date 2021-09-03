@@ -1,0 +1,88 @@
+﻿//strored procedure-demo
+function Sample() {
+    var context= getContext();
+    var response= context.getResponse();
+    response.setBody("Executing a stored procedure");
+}
+
+//stored procedure-Additem
+function createToDoItems(items) {
+    var collection = getContext().getCollection();
+    var collectionLink = collection.getSelfLink();
+    var count = 0;
+
+    if (!items) throw new Error("The array is undefined or null.");
+
+    var numItems = items.length;
+
+    if (numItems == 0) {
+        getContext().getResponse().setBody(0);
+        return;
+    }
+
+    tryCreate(items[count], callback);
+
+    function tryCreate(item, callback) {
+        var options = { disableAutomaticIdGeneration: false };
+
+        var isAccepted = collection.createDocument(collectionLink, item, options, callback);
+
+        if (!isAccepted) getContext().getResponse().setBody(count);
+    }
+
+    function callback(err, item, options) {
+        if (err) throw err;
+        count++;
+        if (count >= numItems) {
+            getContext().getResponse().setBody(count);
+        } else {
+            tryCreate(items[count], callback);
+        }
+    }
+}
+
+//trigger-Addtimestamp
+function AddTimestamp() {
+    var context = getContext();
+    var request = context.getRequest();
+
+
+    var itemToCreate = request.getBody();
+
+
+    if (!("timestamp" in itemToCreate)) {
+        var ts = new Date();
+        itemToCreate["timestamp"] = ts.getTime();
+    }
+
+
+    request.setBody(itemToCreate);
+}
+
+//indexing policy
+{
+    "indexingMode": "consistent",
+    "automatic": true,
+    "includedPaths": [
+        {
+            "path": "/*"
+        }
+    ],
+    "excludedPaths": [
+        {
+            "path": "/\"_etag\"/?"
+        }
+    ],
+    "compositeIndexes": [
+        [
+            {
+                "path": "/coursename",
+                "order": "ascending"
+            },
+            {
+                "path": "/rating",
+                "order": "ascending"
+            }
+        ]
+    ]
+}
