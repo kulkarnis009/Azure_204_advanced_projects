@@ -16,7 +16,7 @@ namespace AzureStorageAccountFunctionapp1
             ConnectionStringSetting ="CosmosDBConnectionString")] out dynamic document,
             string name, ILogger log)
         {
-            log.LogInformation($"C# Blob trigger function Processed blob\n Name:{name} \n Size: {myBlob.Length} Bytes");
+            log.LogInformation($"C# Blob trigger function Processed blob\n Name is:{name} \n Size: {myBlob.Length} Bytes");
 
             Blob _blob = new Blob()
             {
