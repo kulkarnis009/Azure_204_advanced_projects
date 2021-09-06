@@ -50,8 +50,8 @@ namespace CosmosDB_Application1
             //execute_Stored_Procedure_Additem_Cosmos_DB.Execute_stored_procedure_Additem_Cosmos_DB_method();
 
             //To add timestamp into object using pre-trigger
-            Trigger_item_add_CosmosDB trigger_Item_Add_CosmosDB = new Trigger_item_add_CosmosDB();
-            trigger_Item_Add_CosmosDB.Trigger_item_add_CosmosDB_method();
+            //Trigger_item_add_CosmosDB trigger_Item_Add_CosmosDB = new Trigger_item_add_CosmosDB();
+            //trigger_Item_Add_CosmosDB.Trigger_item_add_CosmosDB_method();
 
             Console.ReadKey();
         }
