@@ -20,6 +20,8 @@ namespace KeyVaultAppConsole2
             var secret=secretClient.GetSecret(secret_name);
 
             Console.WriteLine($"The secret is {secret.Value.Value}");
+
+            Console.ReadKey();
         }
     }
 }
